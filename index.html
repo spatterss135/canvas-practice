@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HTML5 Canvas</title>
+</head>
+<body>
+<div class="container">
+  <canvas id="draw" width="1000" height="1000" style="border:1px solid #000000;"></canvas>
+</div>
+
+<script>
+
+  const canvas = document.getElementById('draw')
+  canvas.width = window.innerWidth
+  canvas.height = window.innerHeight
+  const ctx = canvas.getContext("2d")
+  
+  let isDrawing = false
+  let hslNumber = 335
+  ctx.lineCap = 'round'
+  // let fillStyle = `hsl(${hslNumber}, 100%, 52%)`
+  ctx.beginPath()
+  
+  window.addEventListener('mousemove', function(e) {
+    if (isDrawing) {
+      console.log(hslNumber)
+      x = e.offsetX
+      y = e.offsetY
+      if (hslNumber < 360){
+        hslNumber++
+      }
+      else {
+        hslNumber = 0
+      }
+      ctx.lineWidth = hslNumber/10
+      let fillStyle = `hsl(${hslNumber}, 100%, 52%)`
+      ctx.strokeStyle = fillStyle
+      ctx.lineTo(x, y)
+      ctx.stroke()
+    }
+    
+  })
+
+  window.addEventListener('mousedown', function() {
+    isDrawing = true
+    ctx.beginPath()
+  })
+  
+  window.addEventListener('mouseup', function() {
+    isDrawing = false
+  })
+  ctx.fill()
+</script>
+
+<style>
+  html, body {
+    margin: 0;
+  }
+
+  .container {
+    margin: auto;
+  }
+  
+</style>
+
+</body>
+</html>
